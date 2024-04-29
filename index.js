@@ -47,7 +47,7 @@ async function run() {
     //order services
     app.post("/orders", async (req, res) => {
       const orders = req.body;
-      console.log(order);
+      console.log(orders);
       const result = await orderCollection.insertOne(orders);
       res.send(result);
     });

@@ -38,19 +38,26 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const options = {
-        projection: { title: 1, price: 20, service_id: 1 },
+        projection: { title: 1, price: 20, service_id: 1, img: 1 },
       };
       const result = await servicesCollection.findOne(query);
 
       res.send(result);
     });
+    // delete data
+    app.delete("/orders/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await orderCollection.deleteOne(query);
+      res.send(result); 
+    });
     //order services
-//! sumdata
+    //! sumdata
     app.get("/orders", async (req, res) => {
-      console.log(req.query.email)
-      let query={};
-      if(req.query?.email){
-        query={email:req.query.email}
+      console.log(req.query.email);
+      let query = {};
+      if (req.query?.email) {
+        query = { email: req.query.email };
       }
       const result = await orderCollection.find(query).toArray();
       res.send(result);

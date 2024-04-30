@@ -47,12 +47,12 @@ async function run() {
     //order services
 //! sumdata
     app.get("/orders", async (req, res) => {
-      console.log(req.query)
+      console.log(req.query.email)
       let query={};
       if(req.query?.email){
         query={email:req.query.email}
       }
-      const result = await orderCollection.find().toArray();
+      const result = await orderCollection.find(query).toArray();
       res.send(result);
     });
 

@@ -45,6 +45,17 @@ async function run() {
       res.send(result);
     });
     //order services
+//! sumdata
+    app.get("/orders", async (req, res) => {
+      console.log(req.query)
+      let query={};
+      if(req.query?.email){
+        query={email:req.query.email}
+      }
+      const result = await orderCollection.find().toArray();
+      res.send(result);
+    });
+
     app.post("/orders", async (req, res) => {
       const orders = req.body;
       console.log(orders);

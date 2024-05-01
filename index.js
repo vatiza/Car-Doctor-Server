@@ -100,6 +100,8 @@ async function run() {
     //order services
     //! sumdata
     app.get("/orders", verifyJWT, async (req, res) => {
+      const decoded=req.decoded;
+      console.log(decoded);
       let query = {};
       if (req.query?.email) {
         query = { email: req.query.email };

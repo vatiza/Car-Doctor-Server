@@ -49,7 +49,21 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await orderCollection.deleteOne(query);
-      res.send(result); 
+      res.send(result);
+    });
+    // uppdate
+    app.patch("/orders/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updateOrdersData = req.body;
+      console.log(updateOrdersData);
+      const updateDOc = {
+        $set: {
+          status: updateOrdersData.status,
+        },
+      };
+      const result = await orderCollection.updateOne(filter, updateDOc);
+      res.send(result);
     });
     //order services
     //! sumdata

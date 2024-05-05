@@ -30,13 +30,13 @@ const verifyJWT = (req, res, next) => {
   }
   const token = authorization.split(" ")[1];
   console.log("token inside verify", token);
-  jwt.verify(token,process.env.ACCESS_TOKEN,(error,decoded)=>{
-    if(error){
-      return res.send({error:true, message:' unauthorized access'})
+  jwt.verify(token, process.env.ACCESS_TOKEN, (error, decoded) => {
+    if (error) {
+      return res.send({ error: true, message: " unauthorized access" });
     }
-    req.decoded=decoded;
-    next()
-  })
+    req.decoded = decoded;
+    next();
+  });
 };
 
 async function run() {
@@ -62,7 +62,13 @@ async function run() {
 
     // servieces routes
     app.get("/services", async (req, res) => {
-      const cursor = servicesCollection.find();
+      const query = {};
+      const options = {
+        sort: {
+          price: -1,
+        },
+      };
+      const cursor = servicesCollection.find(query,options);
       const result = await cursor.toArray();
       res.send(result);
     });
@@ -100,7 +106,7 @@ async function run() {
     //order services
     //! sumdata
     app.get("/orders", verifyJWT, async (req, res) => {
-      const decoded=req.decoded;
+      const decoded = req.decoded;
       console.log(decoded);
       let query = {};
       if (req.query?.email) {

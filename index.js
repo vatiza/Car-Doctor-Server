@@ -64,10 +64,11 @@ async function run() {
     app.get("/services", async (req, res) => {
       const sort = req.query.sort;
       console.log(sort);
-      const query = {};
+      const query={}
+      // const query = { price: { $lt: 70 } };
       const options = {
         sort: {
-          'price': sort==='asc'? 1: -1
+          price: sort === "asc" ? 1 : -1,
         },
       };
       const cursor = servicesCollection.find(query, options);
